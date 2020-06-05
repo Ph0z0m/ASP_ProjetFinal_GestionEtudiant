@@ -1,0 +1,58 @@
+﻿@using GestionEtudiants.Models
+
+@model EtudiantsViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Liste des étudiants</h1>
+
+    <table class="table">
+        <tr>
+            <td>Identifiant</td>
+            <td>Nom</td>
+            <td>Prénom</td>
+            <td>Genre</td>
+            <td>Age</td>
+            <td>Promotion</td>
+            <td>Identifiant Promotion</td>
+            <td>Options</td>
+        </tr>
+
+
+        @foreach (Etudiant etudiant in Model.Etudiants)
+        {
+    <tr>
+        <td>@etudiant.Identifiant</td>
+        <td>@etudiant.Nom</td>
+        <td>@etudiant.Prenom</td>
+        <td>@etudiant.Genre</td>
+        <td>@etudiant.Age</td>
+        <td>@etudiant.Prenom</td>
+        <td>@etudiant.IdPromotion</td>
+        <td>
+            @{
+                Dictionary<string, string> parameters = new Dictionary<string, string>();
+
+                parameters.Add("id", etudiant.Identifiant.ToString());
+            }
+            <a asp-controller="Bugs" asp-action="Delete" asp-all-route-data="parameters" class="btn btn-danger">
+                <i class="far fa-trash-alt"></i>
+            </a>
+
+
+            <a asp-controller="Bugs" asp-action="Edit" asp-all-route-data="parameters" class="btn btn-success">
+                <i class="fas fa-edit"></i>
+            </a>
+        </td>
+    </tr>
+        }
+    </table>
+
+    <a asp-controller="Bugs" asp-action="Create" class="btn btn-primary">Ajouter un bug</a>
+
+</div>
+
+

@@ -1,0 +1,55 @@
+﻿@model EtudiantsViewModel
+
+@{
+    ViewData["Title"] = "View";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Liste des étudiants</h1>
+
+    <table class="table">
+        <tr>
+            <td>Identifiant</td>
+            <td>Nom</td>
+            <td>Prénom</td>
+            <td>Genre</td>
+            <td>Âge</td>
+            <td>Promotion</td>
+            <td>Identifiant de Promotion</td>
+        </tr>
+
+
+        @foreach (GestionEtudiants.Models.Etudiant etudiant in Model.Etudiants)
+        {
+    <tr>
+        <td>@etudiant.Identifiant</td>
+        <td>@etudiant.Nom</td>
+        <td>@etudiant.Prenom</td>
+        <td>@etudiant.Age</td>
+        <td>@etudiant.Genre</td>
+        <td>@etudiant.Promotion</td>
+        <td>@etudiant.IdPromotion</td>
+        <td>
+            @{
+                Dictionary<string, string> parameters = new Dictionary<string, string>();
+
+                parameters.Add("id", etudiant.Identifiant.ToString());
+            }
+            <a asp-controller="Etudiants" asp-action="Delete" asp-all-route-data="parameters" class="btn btn-danger">
+                <i class="far fa-trash-alt"></i>
+            </a>
+
+
+            <a asp-controller="Etudiants" asp-action="Edit" asp-all-route-data="parameters" class="btn btn-success">
+                <i class="fas fa-edit"></i>
+            </a>
+        </td>
+    </tr>
+        }
+    </table>
+
+    <a asp-controller="Etudiants" asp-action="Create" class="btn btn-primary">Ajouter un bug</a>
+
+</div>
+
+

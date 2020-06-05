@@ -1,0 +1,22 @@
+﻿@model DeleteEtudiantViewModel
+
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Suppression</h1>
+
+@if (Model.IsDeleted)
+{
+    <text>
+        La suppression a été effectuée
+    </text>
+}
+else
+{
+    <text>
+        Suppression impossible
+    </text>
+}
+

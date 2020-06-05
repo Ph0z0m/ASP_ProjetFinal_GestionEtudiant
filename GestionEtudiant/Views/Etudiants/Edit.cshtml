@@ -1,0 +1,64 @@
+﻿@model EtudiantViewModel
+
+@{
+    ViewData["Title"] = "Edition";
+}
+
+<h1>Edition etudiant</h1>
+
+<div class="container">
+    <form asp-action="Edit" method="post">
+        @*Identifiant
+        Nom
+        Prénom
+        Genre
+        Âge
+        Promotion
+        Identifiant de promotion*@
+
+        <input asp-for="Identifiant" type="hidden" class="form-control" />
+        <div class="form-group">
+            <label asp-for="Nom" class="control-label"></label>
+            <input asp-for="Nom" class="form-control" />
+            <span asp-validation-for="Nom" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Prenom" class="control-label"></label>
+            <input asp-for="Prenom" class="form-control" />
+            <span asp-validation-for="Prenom" class="text-danger"></span>
+        </div>
+        <div class="form-group form-check">
+            <label class="form-check-label">
+                <input class="form-check-input" asp-for="Genre" /> @Html.DisplayNameFor(model => model.Genre)
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Age" class="control-label"></label>
+            <input asp-for="Age" class="form-control" />
+            <span asp-validation-for="Age" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+
+            <label asp-for="IdPromotion" class="control-label"></label>
+
+            <select class="form-control" asp-for="IdPromotion" asp-items="Model.Promotions"></select>
+
+            <span asp-validation-for="IdPromotion" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Sauvegarder" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
+
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
