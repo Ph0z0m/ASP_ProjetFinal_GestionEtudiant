@@ -1,0 +1,94 @@
+/*-------------------*/
+/*SCRIPT DE CREATION:*/
+/*-------------------*/
+DROP DATABASE IF EXISTS gestion_etudiants ;
+CREATE DATABASE gestion_etudiants ;
+
+USE gestion_etudiants ;
+
+DROP TABLE IF EXISTS etudiant ;
+DROP TABLE IF EXISTS promotion ;
+ 
+CREATE TABLE `Gestion_etudiants`.`Etudiant`(
+	`identifiant` INT NOT NULL AUTO_INCREMENT,
+    `nom` VARCHAR(45) NOT NULL,
+    `prenom` VARCHAR(45) NOT NULL,
+    `genre` BINARY NOT NULL,
+    `age` INT(2) NOT NULL,
+    `promotion` VARCHAR(45)  NOT NULL,
+    `identifiantPromotion` TINYINT UNSIGNED NOT NULL,
+    PRIMARY KEY (`identifiant`),
+    UNIQUE INDEX `identifiant_UNIQUE` (`identifiant` ASC)
+    );
+CREATE TABLE promotion (
+	`identifiantPromotion` TINYINT UNSIGNED NOT NULL,
+    `label` VARCHAR(45),
+    `nombre` INT(2),
+    PRIMARY KEY (`identifiantPromotion`),
+    UNIQUE INDEX `identifiantPromotion_UNIQUE` (`identifiantPromotion` ASC)
+    );
+
+ALTER TABLE `Gestion_etudiants`.`Etudiant` 
+ADD INDEX `FK_Etudiant_identifiantPromotion` (`identifiant` ASC);
+
+
+ALTER TABLE `Gestion_etudiants`.`Etudiant` 
+ADD CONSTRAINT `FK_identifiantPromotion`
+  FOREIGN KEY (`identifiantPromotion`)
+  REFERENCES `Gestion_etudiants`.`promotion` (`identifiantPromotion`)
+  ON DELETE NO ACTION
+
+/*-------------------*/
+/*SCRIPT D'INSERTION:*/
+/*-------------------*/
+USE `Gestion_etudiants`;
+
+DELETE FROM etudiant;
+DELETE FROM promotion;
+
+INSERT INTO `promotion`(`identifiant`, `label`, `nombre`) 
+VALUES (1, 'Isaac', 5), (2, 'Matthew', 5), (3, 'Albert', 5);
+
+INSERT INTO `gestion_etudiants`.`etudiant` (`identifiant`, `nom`, `prenom`, `genre`, `age`, `promotion`, `identifiantPromotion`)
+VALUES (1, 'Dupont', 'Jean', '1',  18, 'Isaac', '1'),
+	   (2, 'Porte', 'Fred', '1',  21, 'Isaac', '1'),
+       (3, 'Malle', 'Daphné', '0', 19, 'Isaac', '1'),
+       (4, 'Mouton', 'David', '1', 20, 'Matthew','2'),
+       (5, 'Dupond', 'Pierre', '1', 18, 'Isaac', '1'),
+       (6, 'Frite', 'Marie', '0', 18, 'Albert','3'),
+	   (7, 'Dasz', 'Antoine', '1', 21, 'Isaac', '1'),
+       (8, 'Serre', 'Mathieu', '1', 19, 'Albert','3'),
+       (9, 'Mouton', 'David', '1', 20, 'Matthew','2'),
+       (10, 'Dupond', 'Pierre', '1', 18, 'Matthew','2'),
+       (11, 'Dupont', 'Jean', '1', 18, 'Albert','3'),
+	   (12, 'Porte', 'Fred', '1', 21, 'Albert','3'),
+       (13, 'Malle', 'Daphné', '0', 19, 'Matthew','2'),
+       (14, 'Mouton', 'David', '1', 20, 'Matthew','2'),
+       (15, 'Dupond', 'Pierre', '1', 18, 'Albert','3');
+
+/*-----------------------*/
+/*SCRIPT DE MODIFICATION:*/
+/*-----------------------*/
+USE `Gestion_etudiants`;
+
+UPDATE Etudiant 
+SET etu_nom = 'Callu', etu_pre = 'Sandra'
+WHERE etu_id = 13;
+
+UPDATE Promotion 
+SET promo_nom = 'Galilée'
+WHERE promotion.promo_id = 2;
+
+SELECT * FROM etudiant;
+
+/*----------------------*/
+/*SCRIPT DE SUPPRESSION:*/
+/*----------------------*/
+USE `Gestion_etudiants`;
+
+DELETE FROM etudiant WHERE etu_id = 5;
+
+DELETE FROM Promotion WHERE promotion.promo_id = 2;
+DELETE FROM Etudiant WHERE etudiant.etu_promo_id = 2;
+
+SELECT * FROM Etudiant;
